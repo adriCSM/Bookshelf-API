@@ -1,0 +1,24 @@
+{
+    "name": "app-back-end",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/server.js",
+    "scripts": {
+        "lint": "eslint --fix --ext .js,.jsx .",
+        "start": "node src/server.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^8.20.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "nodemon": "^2.0.19"
+    },
+    "dependencies": {
+        "@hapi/hapi": "^20.2.2",
+        "nanoid": "^3.3.4"
+    }
+}
