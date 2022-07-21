@@ -4,7 +4,7 @@
     "description": "",
     "main": "src/server.js",
     "scripts": {
-        "lint": "eslint --fix --ext .js,.jsx .",
+        "lint": "eslint --fix --ext .",
         "start": "node src/server.js"
     },
     "keywords": [],

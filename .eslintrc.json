@@ -21,7 +21,7 @@
           }],
         "quotes": ["error", "single"],
         "linebreak-style": ["error", "windows"],
-        "no-unused-vars": ["error",{ "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+        "no-unused-vars": ["error",{  "args": "none", "ignoreRestSiblings": false }],
         "new-cap": ["error",{ "newIsCap": false }],
         "max-len": ["error", { "code": 800 }]
     }
