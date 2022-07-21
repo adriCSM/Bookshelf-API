@@ -22,8 +22,8 @@ const addNoteHandler = (request, h) => {
 
     if (isSuccess) {
         const response = h.response({
-            status: 'succes',
-            message: 'catatan berhasil di tambahkan',
+            status: 'success',
+            message: 'Catatan berhasil ditambahkan',
             data: {
                 noteId: id,
             },
@@ -124,5 +124,9 @@ const deleteNoteByIdHandler = (request, h) => {
 };
 
 module.exports = {
-    addNoteHandler, getAllNotesHandler, getNoteByIdHandler, editNoteByIdHandler, deleteNoteByIdHandler,
+    addNoteHandler,
+    getAllNotesHandler,
+    getNoteByIdHandler,
+    editNoteByIdHandler,
+    deleteNoteByIdHandler,
 };
