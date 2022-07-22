@@ -1,0 +1,380 @@
+{
+	"info": {
+		"_postman_id": "d68f3980-5305-40f3-b5a6-bc7a966666c8",
+		"name": "Bookshelf API Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Menambahkan Buku",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response status code should have 201 value\",()=>{\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response Content-Type header should have application/json value\",()=>{\r",
+							"     pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8')\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							" const responseJson= pm.response.json();\r",
+							" pm.expect(responseJson).to.be.an('object');\r",
+							"}); \r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.ownProperty('status');\r",
+							"    pm.expect(responseJson.status).to.equals('Success');\r",
+							"    pm.expect(responseJson).to.ownProperty('message');\r",
+							"    pm.expect(responseJson.message).to.equals('Buku berhasil ditambahkan');\r",
+							"    pm.expect(responseJson).to.ownProperty('data');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data should have bookId property and not equal to empty', () => {\r",
+							" const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							" \r",
+							"    pm.expect(data).to.ownProperty('bookId');\r",
+							"    pm.expect(data.noteId).to.not.equals('');\r",
+							" \r",
+							"    pm.environment.set('bookId', data.bookId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"title\":\"Geoteknik Tambang\",\r\n    \"year\":\"2016\",\r\n    \"writer\":\"Prof.Dr.Ir. Irwandy Arif, m.sc\",\r\n    \"summary\":\"Buku geoteknik tambang adalah buku yang membahas ilmu geoteknik secara mendasar.\",\r\n    \"publisher\":\"PT Gramedia Pustaka Utama\",\r\n    \"pageCount\":\"399 halaman\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Menampilkan Selerurh Buku",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 value', () => {\r",
+							" pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"pm.test('response Content-Type header should have application/json value', () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"}); \r",
+							"\r",
+							"pm.test('response body should an object', () => {\r",
+							"   const responseJson = pm.response.json();\r",
+							"   pm.expect(responseJson).to.be.an('object');\r",
+							"}); \r",
+							"\r",
+							"pm.test('response body should have the correct property and value', () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"   pm.expect(responseJson).to.have.ownProperty('status');\r",
+							"   pm.expect(responseJson.status).to.equals('Success');\r",
+							"   pm.expect(responseJson).to.have.ownProperty('data');\r",
+							"   pm.expect(responseJson.data).to.be.an('object');\r",
+							"}); \r",
+							"\r",
+							"pm.test('response body data should have a books array and contain at least 1 item', () => {\r",
+							"   const responseJson = pm.response.json();\r",
+							"   const { data } = responseJson;\r",
+							" \r",
+							"   pm.expect(data).to.have.ownProperty('books');\r",
+							"   pm.expect(data.books).to.be.an('array');\r",
+							"   pm.expect(data.books).lengthOf.at.least(1);\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Menampilkan Detail Buku",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 value', () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"}); \r",
+							"\r",
+							"pm.test('response Content-Type header should have application/json value', () => {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"   const responseJson = pm.response.json();\r",
+							"   pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have the correct property and value', () => {\r",
+							"   const responseJson = pm.response.json();\r",
+							" \r",
+							"   pm.expect(responseJson).to.have.ownProperty('status');\r",
+							"   pm.expect(responseJson.status).to.equals('Success');\r",
+							"   pm.expect(responseJson).to.have.ownProperty('data');\r",
+							"   pm.expect(responseJson.data).to.be.an('object');\r",
+							"}); \r",
+							"\r",
+							"pm.test('response body data should contain book object', () => {\r",
+							"   const responseJson = pm.response.json();\r",
+							"   const { data } = responseJson;\r",
+							" \r",
+							"   pm.expect(data).to.have.ownProperty('book');\r",
+							"   pm.expect(data.book).to.be.an('object');\r",
+							"}); \r",
+							"\r",
+							"pm.test('book object should contain correct value for id, title, year, writer, summary, publisher, and pageCount property', () => {\r",
+							"   const responseJson = pm.response.json();\r",
+							"   const { data: { book } } = responseJson;\r",
+							"   const expectedId = pm.environment.get('bookId');\r",
+							"   const expectedTitle = 'Geoteknik Tambang';\r",
+							"   const expectedYear = '2016';\r",
+							"   const expectedWriter = 'Prof.Dr.Ir. Irwandy Arif, m.sc';\r",
+							"   const expectedSummary = 'Buku geoteknik tambang adalah buku yang membahas ilmu geoteknik secara mendasar.';\r",
+							"   const expectedPublisher = 'PT Gramedia Pustaka Utama';\r",
+							"   const expectedPageCount = '399 halaman';\r",
+							"\r",
+							"   pm.expect(book).to.have.ownProperty('id');\r",
+							"   pm.expect(book.id).to.equals(expectedId);\r",
+							"\r",
+							"   pm.expect(book).to.have.ownProperty('title');\r",
+							"   pm.expect(book.title).to.equals(expectedTitle);\r",
+							"\r",
+							"   pm.expect(book).to.have.ownProperty('year');\r",
+							"   pm.expect(book.year).to.eql(expectedYear);\r",
+							"\r",
+							"   pm.expect(book).to.have.ownProperty('writer');\r",
+							"   pm.expect(book.writer).to.equals(expectedWriter);\r",
+							"\r",
+							"   pm.expect(book).to.have.ownProperty('summary');\r",
+							"   pm.expect(book.summary).to.equals(expectedSummary);\r",
+							"\r",
+							"   pm.expect(book).to.have.ownProperty('publisher');\r",
+							"   pm.expect(book.publisher).to.equals(expectedPublisher);\r",
+							"\r",
+							"   pm.expect(book).to.have.ownProperty('pageCount');\r",
+							"   pm.expect(book.pageCount).to.equals(expectedPageCount);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/books/{{bookId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books",
+						"{{bookId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mengubah Data Buku",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 value', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response Content-Type header should have application/json value', () => {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.equals(\"application/json; charset=utf-8\");\r",
+							"}); \r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"   const responseJson = pm.response.json();\r",
+							"   pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"   const responseJson = pm.response.json();\r",
+							" \r",
+							"   pm.expect(responseJson).to.have.ownProperty('status');\r",
+							"   pm.expect(responseJson.status).to.equals('Success');\r",
+							"   pm.expect(responseJson).to.have.ownProperty('message');\r",
+							"   pm.expect(responseJson.message).to.equals('Buku berhasil diperbarui');\r",
+							"});\r",
+							"\r",
+							"pm.test('when request the updated book', () => {\r",
+							"    const bookId = pm.environment.get('bookId');\r",
+							"    pm.sendRequest(`http://localhost:3000/books/${bookId}`, (error, response) => {\r",
+							"        if(!error) {\r",
+							"            pm.test('then the updated book should contain the latest data', () => {\r",
+							"                const responseJson = response.json();\r",
+							"                const { data: {book} } = responseJson;\r",
+							" \r",
+							"                const expectedTitle = 'Geologi Mineral Logam';\r",
+							"                const expectedYear = '2007';\r",
+							"                const expectedWriter = 'Prof.Ir. Sukandarrumidi, M.Sc.,Ph.D';\r",
+							"                const expectedSummary = 'Buku ini membahas berbagai macam logam, cara terbentuknya di alam, tempat didapatkan dan kegunaannya.';\r",
+							"                const expectedPublisher = 'Gadja Mada University Press, Anggota IKAPI';\r",
+							"                const expectedPageCount = '209 halaman';\r",
+							" \r",
+							"                pm.expect(book.title).to.equal(expectedTitle);\r",
+							"                pm.expect(book.year).to.eql(expectedYear);\r",
+							"                pm.expect(book.writer).to.equals(expectedWriter);\r",
+							"                pm.expect(book.summary).to.equals(expectedSummary);\r",
+							"                pm.expect(book.publisher).to.equals(expectedPublisher);\r",
+							"                pm.expect(book.pageCount).to.equals(expectedPageCount);\r",
+							"            });\r",
+							"        }\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"Geologi Mineral Logam\",\r\n    \"year\":\"2007\",\r\n    \"writer\":\"Prof.Ir. Sukandarrumidi, M.Sc.,Ph.D\",\r\n    \"summary\":\"Buku ini membahas berbagai macam logam, cara terbentuknya di alam, tempat didapatkan dan kegunaannya.\",\r\n    \"publisher\":\"Gadja Mada University Press, Anggota IKAPI\",\r\n    \"pageCount\":\"209 halaman\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/books/{{bookId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books",
+						"{{bookId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Menghapus Buku",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 value', () => {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response Content-Type header should have application/json value', () => {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8')\r",
+							"}); \r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"   const responseJson = pm.response.json();\r",
+							"   pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"   const responseJson = pm.response.json();\r",
+							" \r",
+							"   pm.expect(responseJson).to.have.ownProperty('status');\r",
+							"   pm.expect(responseJson.status).to.equals('Success');\r",
+							"   pm.expect(responseJson).to.have.ownProperty('message');\r",
+							"   pm.expect(responseJson.message).to.equals('Buku berhasil dihapus');\r",
+							"}); \r",
+							"\r",
+							"pm.test('when request the deleted book', () => {\r",
+							"    const bookId = pm.environment.get('bookId');\r",
+							"    pm.sendRequest(`http://localhost:5000/books/${bookId}`, (error, response) => {\r",
+							"        if(!error) {\r",
+							"            pm.test('the deleted book should be not found', () => {\r",
+							"                pm.expect(response.code).to.equals(404);\r",
+							"                const responseJson = response.json();\r",
+							"                pm.expect(responseJson.status).to.equals('Failed');\r",
+							"                pm.expect(responseJson.message).to.equals('Buku tidak ditemukan');\r",
+							"            });\r",
+							"        }\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/books/{{bookId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books",
+						"{{bookId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
