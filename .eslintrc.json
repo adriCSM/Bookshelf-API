@@ -4,23 +4,15 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-        "airbnb-base",
-        "eslint:recommended"
-    ],
+    "extends": ["airbnb-base", "eslint:recommended"],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
     "rules": {
-        "eol-last": "off",
-        "no-console": "off",
-        "indent": ["error", 4],
-        "space-before-function-paren": ["error", {
-          "asyncArrow": "never"
-          }],
+        "semi": ["error", "always"],
         "quotes": ["error", "single"],
-        "linebreak-style": ["error", "windows"],
-        "no-unused-vars": ["error",{  "args": "none", "ignoreRestSiblings": false }],
-        "new-cap": ["error",{ "newIsCap": false }],
-    }  
+        "linebreak-style": 0,
+        "no-console": 0,
+        "indent": [4, "tab"]
+    }
 }

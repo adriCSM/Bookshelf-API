@@ -2,7 +2,6 @@ const { isEmpty } = require('lodash');
 const { nanoid } = require('nanoid');
 const books = require('./books');
 
-
 /**POST */
 const addBookHandler = (request, h) => {
     const {
@@ -42,7 +41,6 @@ const addBookHandler = (request, h) => {
         reading,
         insertedAt,
         updatedAt,
-
     };
 
     books.push(newBooks);
@@ -60,7 +58,8 @@ const addBookHandler = (request, h) => {
     if (readPage > pageCount) {
         const response = h.response({
             status: 'fail',
-            message: 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
+            message:
+                'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
         });
         response.code(400);
         return response;
@@ -75,46 +74,37 @@ const addBookHandler = (request, h) => {
         });
         response.code(201);
         return response;
-    };
+    }
 
     const response = h.response({
-        status: "error",
-        message: "Buku gagal ditambahkan"
+        status: 'error',
+        message: 'Buku gagal ditambahkan',
     });
     response.code(500);
     return response;
 };
 
-
-
-
-
 /**GET ALL */
 const getAllBooksHandler = (request, h) => {
     const newBooks = [];
-    books.forEach(item => {
+    books.forEach((item) => {
         const items = {
             id: item.id,
             name: item.name,
             publisher: item.publisher,
         };
-        newBooks.push(items)
-    })
+        newBooks.push(items);
+    });
 
     const response = h.response({
         status: 'success',
         data: {
             books: newBooks,
         },
-    })
+    });
     response.code(200);
     return response;
 };
-
-
-
-
-
 
 /**GET BY ID*/
 const getBookByIdHandler = (request, h) => {
@@ -139,10 +129,6 @@ const getBookByIdHandler = (request, h) => {
     return response;
 };
 
-
-
-
-
 /**EDIT */
 const editBookByIdHandler = (request, h) => {
     const { bookId } = request.params;
@@ -154,7 +140,7 @@ const editBookByIdHandler = (request, h) => {
         publisher,
         pageCount,
         readPage,
-        reading
+        reading,
     } = request.payload;
 
     const updatedAt = new Date().toISOString();
@@ -162,8 +148,8 @@ const editBookByIdHandler = (request, h) => {
 
     if (isEmpty(name)) {
         const response = h.response({
-            status: "fail",
-            message: "Gagal memperbarui buku. Mohon isi nama buku"
+            status: 'fail',
+            message: 'Gagal memperbarui buku. Mohon isi nama buku',
         });
 
         response.code(400);
@@ -171,8 +157,9 @@ const editBookByIdHandler = (request, h) => {
     }
     if (readPage > pageCount) {
         const response = h.response({
-            status: "fail",
-            message: "Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount"
+            status: 'fail',
+            message:
+                'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
         });
 
         response.code(400);
@@ -189,7 +176,7 @@ const editBookByIdHandler = (request, h) => {
             publisher,
             pageCount,
             readPage,
-            reading
+            reading,
         };
         const response = h.response({
             status: 'success',
@@ -202,15 +189,12 @@ const editBookByIdHandler = (request, h) => {
 
     const response = h.response({
         status: 'fail',
-        message: "Gagal memperbarui buku. Id tidak ditemukan"
+        message: 'Gagal memperbarui buku. Id tidak ditemukan',
     });
 
     response.code(404);
     return response;
 };
-
-
-
 
 /**DELETE */
 const deleteBookByIdHandler = (request, h) => {
